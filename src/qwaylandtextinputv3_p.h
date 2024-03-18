@@ -55,13 +55,17 @@ class Q_WAYLANDCLIENT_EXPORT QWaylandTextInputv3Manager
 	QLocale locale() const override;
 	Qt::LayoutDirection inputDirection() const override;
 
-	void showInputPanel();
-	void hideInputPanel();
+	void showInputPanel() override;
+	void hideInputPanel() override;
 
-	// doing nothing in zwp_text_input_v3.
-	// enter() and leave() takes the role to enable/disable the surface
-	void enableSurface(::wl_surface *) override {};
-	void disableSurface(::wl_surface *) override {};
+	void enableSurface(::wl_surface *surface) override
+	{
+		showInputPanel();
+	}
+	void disableSurface(::wl_surface *surface) override
+	{
+		hideInputPanel();
+	}
 
     protected:
 	QList<QWaylandTextInputv3 *> m_inputs;
@@ -99,6 +103,7 @@ class Q_WAYLANDCLIENT_EXPORT QWaylandTextInputv3Manager
 	uint m_currentSerial = 0;
 
 	bool m_condReselection = false;
+	bool m_panelVisible = false;
     private slots:
 	void onActiveChanged();
 };

@@ -452,7 +452,7 @@ void QWaylandTextInputv3Manager::setCursorInsidePreedit(int cursor)
 
 bool QWaylandTextInputv3Manager::isInputPanelVisible() const
 {
-	return false;
+	return m_panelVisible;
 }
 
 QRectF QWaylandTextInputv3Manager::keyboardRect() const
@@ -473,14 +473,20 @@ Qt::LayoutDirection QWaylandTextInputv3Manager::inputDirection() const
 
 void QWaylandTextInputv3Manager::showInputPanel()
 {
-	for (auto input : m_inputs)
+	for (auto input : m_inputs) {
 		input->enable();
+		input->commit();
+	}
+	m_panelVisible = true;
 }
 
 void QWaylandTextInputv3Manager::hideInputPanel()
 {
-	for (auto input : m_inputs)
+	for (auto input : m_inputs) {
 		input->disable();
+		input->commit();
+	}
+	m_panelVisible = false;
 }
 
 }
