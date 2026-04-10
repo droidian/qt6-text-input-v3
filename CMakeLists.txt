@@ -4,7 +4,7 @@ project(qt6-text-input-v3 VERSION 0.1)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Core WaylandClient)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui GuiPrivate WaylandClient WaylandClientPrivate)
 
 set(plugin_SRCS
     src/waylandtextinputv3contextplugin.cpp
